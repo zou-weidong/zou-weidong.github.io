@@ -7,7 +7,7 @@ menu:
   main:
     weight: 10
 cascade:
-  type: blog
+  type: docs
 
 ---
 
