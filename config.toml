@@ -1,10 +1,10 @@
-baseURL = "/"
+baseURL = "https://zou-weidong.github.io/"
 title = "August Blog"
 
 # Language settings
 contentDir = "content/zh-CN"
 defaultContentLanguage = "zh-CN"
-defaultContentLanguageInSubdir = true
+defaultContentLanguageInSubdir = false
 # Useful when translating.
 enableMissingTranslationPlaceholders = false
 
@@ -65,6 +65,8 @@ description = "August Blog"
 languageName ="Chinese"
 # Weight used for sorting.
 weight = 1
+contentDir = "content/zh-cn"
+languagedirection = "ltr"
 
 [markup]
   [markup.goldmark]
@@ -84,8 +86,8 @@ weight = 1
 section = []
 
 [params]
-copyright = "The Docsy Authors"
-privacy_policy = "https://policies.google.com/privacy"
+copyright = "August Blog"
+privacy_policy = "https://XXX/privacy"
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
@@ -139,7 +141,7 @@ breadcrumb_disable = false
 # Set to true to disable the About link in the site footer
 footer_about_disable = true
 # Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top navbar
-navbar_logo = false
+navbar_logo = true
 # Set to true if you don't want the top navbar to be translucent when over a `block/cover`, like on the homepage.
 navbar_translucent_over_cover_disable = false
 # Enable to show the side bar menu in its compact state.
