@@ -52,10 +52,7 @@ jobs:
           # HUGO_ENVIRONMENT: production
           # HUGO_ENV: production
         run: |
-          ls . && \
-          hugo --gc \
-            --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/" && ls ./public
+          hugo --minify && ls ./public
 #       - name: Upload artifact
 #         uses: actions/upload-pages-artifact@v1
 #         with:
