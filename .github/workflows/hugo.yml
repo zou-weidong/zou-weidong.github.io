@@ -50,12 +50,12 @@ jobs:
       - name: Install Node.js dependencies
         run: npm install
       - name: Build with Hugo
-        # env:
+        env:
           # For maximum backward compatibility with Hugo modules
-          # HUGO_ENVIRONMENT: production
-          # HUGO_ENV: production
+          HUGO_ENVIRONMENT: production
+          HUGO_ENV: production
         run: |
-          hugo --minify && ls ./public
+          hugo && ls ./public
 #       - name: Upload artifact
 #         uses: actions/upload-pages-artifact@v1
 #         with:
