@@ -1,21 +1,21 @@
 {
-  "name": "zou-weidong.github.io",
+  "name": "tech-doc-hugo",
   "version": "0.0.1",
-  "description": "August Blog",
+  "description": "Hugo theme for technical documentation.",
   "main": "none.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/zou-weidong/zou-weidong.github.io.git"
+    "url": "git+https://github.com/google/docsy-example.git"
   },
-  "author": "zou-weidong",
+  "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/zou-weidong/zou-weidong.github.io/issues"
+    "url": "https://github.com/google/docsy-example/issues"
   },
-  "homepage": "https://github.com/zou-weidong/zou-weidong.github.io#readme",
+  "homepage": "https://github.com/google/docsy-example#readme",
   "devDependencies": {
     "autoprefixer": "^10.4.0",
     "postcss": "^8.3.7",

@@ -1,4 +1,4 @@
-baseURL = "https://zou-weidong.github.io/"
+baseURL = "https://zou-weidong.github.io"
 title = "August Blog"
 
 # Language settings
@@ -14,7 +14,7 @@ enableRobotsTXT = true
 enableGitInfo = true
 
 # Comment out to enable taxonomies in Docsy
-disableKinds = ["taxonomy", "taxonomyTerm","RSS"]
+# disableKinds = ["taxonomy", "taxonomyTerm"]
 
 # You can add your own taxonomies
 [taxonomies]
@@ -65,8 +65,8 @@ description = "August Blog"
 languageName ="Chinese"
 # Weight used for sorting.
 weight = 1
-contentDir = "content/zh-cn"
 languagedirection = "ltr"
+
 
 [markup]
   [markup.goldmark]
@@ -82,12 +82,11 @@ languagedirection = "ltr"
 
 # Comment out if you don't want the "print entire section" link enabled.
 [outputs]
-#section = ["HTML", "print", "RSS"]
-section = []
+section = ["HTML", "print", "RSS"]
 
 [params]
 copyright = "August Blog"
-privacy_policy = "https://XXX/privacy"
+privacy_policy = "https://xxx/privacy"
 
 # First one is picked as the Twitter card image if not set on page.
 # images = ["images/project-illustration.png"]
@@ -111,7 +110,7 @@ version = "0.0"
 url_latest_version = "https://zou-weidong.github.io/"
 
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
-github_repo = "https://github.com/zou-weidong/zou-weidong.github.io"
+github_repo = "https://github.com/google/docsy-example"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
 github_project_repo = "https://github.com/zou-weidong/zou-weidong.github.io"
 
@@ -138,8 +137,8 @@ prism_syntax_highlighting = false
 [params.ui]
 #  Set to true to disable breadcrumb navigation.
 breadcrumb_disable = false
-# Set to true to disable the About link in the site footer
-footer_about_disable = true
+# Set to true to disable the About link in the site footer  ?
+footer_about_disable = false
 # Set to false if you don't want to display a logo (/assets/icons/logo.svg) in the top navbar
 navbar_logo = true
 # Set to true if you don't want the top navbar to be translucent when over a `block/cover`, like on the homepage.
@@ -177,12 +176,27 @@ enable = false
   url = "https://example.org/twitter"
   icon = "fab fa-twitter"
   desc = "Follow us on Twitter to get the latest news!"
+[[params.links.user]]
+  name = "Stack Overflow"
+  url = "https://example.org/stack"
+  icon = "fab fa-stack-overflow"
+  desc = "Practical questions and curated answers"
 # Developer relevant links. These will show up on right side of footer and in the community page if you have one.
 [[params.links.developer]]
   name = "GitHub"
-  url = "https://github.com/zou-weidong/zou-weidong.github.io"
+  url = "https://github.com/google/docsy"
   icon = "fab fa-github"
   desc = "Development takes place here!"
+[[params.links.developer]]
+  name = "Slack"
+  url = "https://github.com/zou-weidong/zou-weidong.github.io"
+  icon = "fab fa-slack"
+  desc = "Chat with other project developers"
+[[params.links.developer]]
+  name = "Developer mailing list"
+  url = "https://example.org/mail"
+  icon = "fa fa-envelope"
+  desc = "Discuss development issues around the project"
 
 # hugo module configuration
 
