@@ -55,7 +55,7 @@ jobs:
           HUGO_ENV: production
         run: |
           hugo version && \
-          ls content/zh-CN/ && hugo version && \
+          ls content/zh-CN/ && \
           hugo --gc \
             --minify \
             --baseURL "${{ steps.pages.outputs.base_url }}/" && ls ./public
