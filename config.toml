@@ -2,8 +2,8 @@ baseURL = "https://zou-weidong.github.io"
 title = "August Blog"
 
 # Language settings
-contentDir = "content/zh-CN"
-defaultContentLanguage = "zh-CN"
+contentDir = "content/zh-cn"
+defaultContentLanguage = "zh-cn"
 defaultContentLanguageInSubdir = false
 # Useful when translating.
 enableMissingTranslationPlaceholders = false
@@ -59,7 +59,7 @@ id = ""
 # Language configuration
 
 [languages]
-[languages.zh-CN]
+[languages.zh-cn]
 title = "August Blog"
 description = "August Blog"
 languageName ="Chinese"
@@ -112,7 +112,7 @@ url_latest_version = "https://zou-weidong.github.io/"
 # Repository configuration (URLs for in-page links to opening issues and suggesting changes)
 github_repo = "https://github.com/zou-weidong/zou-weidong.github.io"
 # An optional link to a related project repo. For example, the sibling repository where your product code lives.
-github_project_repo = "https://github.com/zou-weidong/zou-weidong.github.io"
+github_project_repo = ""
 
 # Specify a value here if your content directory is not in your repo's root directory
 # github_subdir = ""
