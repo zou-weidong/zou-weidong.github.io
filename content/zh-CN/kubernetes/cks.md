@@ -1,7 +1,7 @@
 ---
 title: "cks"
 linkTitle: "CKS"
-weight: 200
+weight: 500
 description: >
     cks证书需要在在cka有效期内考取**cks**证书
 ---
