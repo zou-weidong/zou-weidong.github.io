@@ -79,6 +79,7 @@ k create sa -n qa backend-sa
 k explain serviceaccount  #获取不挂载API的字段
 k edit sa backend-sa -n qa  # 复制进来，值为 false
 
+# 好像要用上面的sa，先edit pod1.yaml 加上 serviceAccountName: backend-sa
 k apply -f /cks/sa/pod1.yaml
 
 k get pod -oyaml -n qa|grep serviceAccont:  #查看所有使用的sa
@@ -101,7 +102,9 @@ k edit role -n db xxx # 对services执行get操作
 k create role role-2 -n db --verb=delete --resource=namespaces
 k create rolebinding  role-2-binding -n db --role=role-2 --serviceaccount=db:service-account-web
 
-#验证
+#验证，可以使用 describe 或者 auth can-i
+k describe rolebinding role-2-binding -n db
+
 k auth can-i get services -n db --as=system:serviceaccount:db:service-account-web
 k auth can-i delete namespaces -n db --as=system:serviceaccount:aba:service-account-web
 
@@ -148,4 +151,212 @@ Task : 使用运行时检测工具来检测Pod tomcat 单个容器中频发生�
 
 
 
-### 5.  容器安全，删除特权pod
+### 5.  默认网络策略
+Context           
+一个默认拒绝（default-deny）的 NetworkPolicy 可避免在未定义任何其他 NetworkPolicy 的 Namespace 中意外公开pod。
+
+Task:               
+为所有类型为 Ingress + Egress 的流量在 namespace **testing** 中创建一个名为 denypolicy 的新默认拒绝 NetworkPolicy。
+此新的 NetworkPolicy 必须拒绝 namespace testing 中的所有的 Ingress + Egress 流量。
+
+将新创建的默认拒绝 NetworkPolicy 应用与在 namespace testing 中运行的所有的pod。
+
+```yaml
+# 拒绝所有pod 
+# https://kubernetes.io/zh-cn/docs/concepts/services-networking/network-policies/#default-deny-all-ingress-and-all-egress-traffic
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: denypolicy
+  namespace: testing
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+
+```
+
+```shell
+# 应用
+kubectl apply -f net.yaml
+# 检查
+kubectl describe networkpolicy -n testing denypolicy
+```
+
+### 6. 审计日志 log audit
+在 cluster 中启用审计日志。为此，请启用日志后端，并确保：
+- 日志存储在/var/log/kubernetes/audit-logs.txt
+- 日志文件能保存 10 天
+- 最多保留 2 个旧审计日志文件
+
+
+/etc/kubernetes/logpolicy/sample-policy.yaml 提供了基本策略。它仅指定**不记录**的内容。
+注意：基本策略位于 cluster 的 master 节点上。
+
+编辑和扩展基本策略以记录：
+- RequestResponse 级别的 **persistentvolumes** 更改
+- namespace **front-apps** 中 **configmaps** 更改的请求体
+- Metadata 级别的所有 namespace 中的 **Configmap** 和 **secret** 的更改
+
+此外，添加一个全方位的规则以在 Metadata 级别记录所有其他请求。
+
+
+注意： 不要忘记应用修改后的策略。
+
+https://kubernetes.io/zh-cn/docs/tasks/debug/debug-cluster/audit/#audit-policy
+
+
+```yml
+apiVersion: audit.k8s.io/v1
+kind: Policy
+omitStages:
+  - ReqyestReceived
+rules:
+  - level: RequestResponse
+    resources:
+    - group: ""
+      resources: ["persistentvolumes"]
+  - level: Request
+    resources:
+    - group: ""
+      resources: ["configmaps"]
+    namespaces: ["front-apps"]
+  - level: Metadata
+    resources:
+    - group: ""
+      resources: ["recrets","configmaps"]
+  - level: Metadata
+    omitStages:
+      - "RequestReceived"
+```
+
+备份 kube-apiserver.yaml 文件，然后修改，新增一下内容：
+
+```
+- --audit-log-path: /var/log/kubernetes/audit-logs.txt
+- --audit-log-maxage: 10
+- --audit-log-maxbackup: 2
+- --audit-policy-file=/etc/kubernetes/logpolicy/sample-policy.yaml
+
+
+volumeMounts:
+    - mountPath: /var/log/kubernetes
+    name: audit-log
+    readOnly: false
+    - mountPath: /etc/kubernetes/logpolicy
+    name: audit
+    readOnly: true
+volumes:
+    - hostPath:
+        path: /var/log/kubernetes
+        type: DirectoryOrCreate
+    name: audit-log
+    - hostPath:
+        path: /etc/kubernetes/logpolicy
+        type: DirectoryOrCreate
+    name: audit
+```
+
+重启 kubelet
+```shell
+# 重启
+systemctl daemon-reload
+systemctl restart kubelet
+
+#检查
+tail -f /var/log/kubernetes/audit-log.txt
+```
+
+
+## 7. 创建Secret
+在 namespace istio-system 中获取名为 db1-test 的现有 secret 的内容。
+将 username 字段存储在  /cka/sec/user.txt 文件中，并将 Password 字段存储在名为 /cks/sec/pass.txt 文件中。
+
+注意： 不要再一下步骤中使用/修改先前创建的文件，如果需要，可以创建新的临时文件。
+
+
+在 istio-system namespace 中创建一个名为 db2-test 的新 secret ，内容如下：
+username: adf
+password: KvLft
+
+最后，创建一个新的pod，可以通过卷访问secret db2-test：
+
+- 容器名dev-container 
+- 镜像 nginx 
+- 卷名 secret-volume 
+- 挂载路径 /etc/secret
+
+
+https://kubernetes.io/zh-cn/docs/concepts/configuration/secret/#restriction-secret-must-exist
+
+
+```shell
+k get secret db1-test -n istio-system
+mkdir -p /cks/sec
+cd /cks/spc
+echo 值 |base64 -d > user.txt
+echo 值 |base64 -d > pass.txt
+cat user.txt
+cat pass.txt
+```
+
+```
+k create secret generic db2-test -n istio-system --from-literal=username=adf --from-literal=password=KvLft
+
+搜 secret ,复制模板改要求即可。
+```
+
+## 8. dockerfile 检测
+分析和编辑给定的 Dockerfile **/cks/docker/Dockerfile**，并修复在文件中拥有的突出的安全/最佳实践问题的两个指令。
+
+分析和编辑给定清单文件 /cks/docker/deployment.yaml ，并修复在文件中突出的安全/最佳实践问题的两个字段。
+
+注意：请勿删除或者添加配置设置；只需修改现有的配置设置，让两个配置不再有安全问题。
+
+注意： 如果需要非特权用户来执行任何项目，请使用用户ID **65535** 的用户 **nobody**。
+
+
+只需要修改即可，不需要创建。
+
+```
+Dockerfile 看题目，image的tag不正确，然后需要将 USER root 换成 **USER nobody**
+
+Deployment 文件将 SecurityContext 里面的admin权限删掉：**SYS_ADMIN**，第二个是 pod 的 label标签和 matchLabels 不匹配，修改 pod 的 metadata labels。
+```
+
+## 9. 沙箱运行容器 gVisor
+该 cluster 使用 containerd 作为 CRI 运行时，containerd 的默认运行时处理程序是runc。
+Containerd 已准备好支持额外的运行时处理程序 runsc（gVisor）
+
+Task：                           
+使用名为 runsc 的现有运行时处理程序，创建一个名为 **untrusted** 的 RuntimeClass。
+更新 namespace server 中的所有pod以在 gVisor 上运行。
+
+可以在 /cks/gVisor/rc.yaml 中找到一个模板清单。
+
+```
+# 创建 runtimeclass，官网搜索模板
+
+apiVersion: node.k8s.io/v1
+kind: RuntimeClass
+metadata:
+  # 用来引用 RuntimeClass 的名字
+  # RuntimeClass 是一个集群层面的资源
+  name: untrusted
+# 对应的 CRI 配置的名称
+handler: runsc
+
+
+# 查看pod，是否是修改deploy，添加字段并验证
+runtimeClassName: untrusted
+
+```
+
+## 10. 容器安全，删除特权pod
+最佳实践是将容器设计为无状态和不可变的。
+
+Task：检查在 namespace production 中运行的pod，并删除任何非无状态或者非不可变的pod。
+
+
+
