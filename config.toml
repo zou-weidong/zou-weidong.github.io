@@ -3,7 +3,7 @@ title = "August Blog"
 
 # Language settings
 contentDir = "content/zh-CN"
-defaultContentLanguage = "zh-CN"
+defaultContentLanguage = "zh-cn"
 defaultContentLanguageInSubdir = false
 # Useful when translating.
 enableMissingTranslationPlaceholders = false
