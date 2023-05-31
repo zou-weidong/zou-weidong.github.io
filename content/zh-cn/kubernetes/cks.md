@@ -495,7 +495,7 @@ k get pods --namespace kamino --output=custom-columns="Name:.metadata.name,Img:.
 k delete pod -n kamino xxx
 ```
 
-## 14. AppArmor
+## 14. AppArmor 
 Context                
 AppArmor 已在 cluster 的工作节点上被启用，一个 AppArmor 配置文件已存在，但尚未被实施。
 
@@ -507,3 +507,8 @@ Task
 
 ## 15. 
 
+
+
+
+
+https://www.cnblogs.com/huss2016/p/17055905.html
