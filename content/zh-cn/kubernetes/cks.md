@@ -142,12 +142,15 @@ Task : 使用运行时检测工具来检测Pod tomcat 单个容器中频发生�
 - sysdig
 - falco
 
-注意： 这些工具只预装在 cluster 的工作节点，不再master 节点。使用工具至少分析 30 秒， 使用过滤器检查生成和执行的进程，将事件写到
+注意： 这些工具只预装在 cluster 的工作节点，不在master 节点。使用工具至少分析 30 秒， 使用过滤器检查生成和执行的进程，将事件写到
  /opt/JSR00101/incidents/summary 文件中，其中包含检测的事件。
 
 格式如下： [timestamp],[uid],[processName] 保持工具的原始时间戳格式不变。
 
 注意：确保事件文件存储在集群的工作节点上。
+
+
+
 
 
 
@@ -358,5 +361,149 @@ runtimeClassName: untrusted
 
 Task：检查在 namespace production 中运行的pod，并删除任何非无状态或者非不可变的pod。
 
+使用以下对无状态和不可变的严格解释：
+- 能够在容器内存储数据的 Pod 容器必须被视为非无状态的。
+- 被配置为任何形式的特权 Pod 必须被视为可能是非无状态和非不可变的。
 
+**思路：**               
+要求删除非无状态和非不可变的pod，即删除任何形式的特权pod和挂载volume的pod。
+
+```bash
+# 查询是不是pod控制
+k get all -n production
+# 查询pod
+k get pod -n production
+
+# 每个pod查看yaml，如果满足要求直接删除
+k get pod -n production -oyaml xxx
+k delete pod -n production xxx
+
+```
+
+
+## 11. container 安全上下文
+**Context**
+
+Container Security Context 应在特定 namespace 中修改 Deployment
+
+
+**Task**
+
+按照如下要求修改 **sec-ns** 命名空间中的 Deplyment **secdep**
+
+1. 用 ID 为 30000 的用户启动容器（设置用户ID为 30000）
+2. 不允许进程获取超出其父进程的特权（禁止 allowPrivilegeEscalation）
+3. 以只读方式加载容器的根文件系统（对根文件的只读特权）
+
+> k create deploy secdep --image=nginx --replicas=2 --dry-run=client -oyaml  -n sec-ns
+
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: secdep
+  name: secdep
+  namespace: sec-ns
+spec:
+  securityContext:  # 添加
+    runAsUser: 30000
+  replicas: 2
+  selector:
+    matchLabels:
+      app: secdep
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: secdep
+    spec:
+      containers:
+      - image: nginx
+        name: nginx
+        resources: {}
+        securityContext:  # 添加，如果有多个容器，每个容器都要添加
+          allowPrivilegeEscalation: false
+          readOnlyRootFilesystem: true
+
+```
+
+## 12. 网络策略 NetworkPolicy
+Task              
+创建一个名为 pod-restriction 的 NetworkPolicy 来限制对在 namespace **dev-team** 中运行的 Pod products-service 的访问。 
+
+只允许以下 Pod 连接到 Pod products-service 
+- namespace **qa** 中的 Pod 
+- 位于任何 namespace，带有标签 **environment: testing** 的 Pod
+
+注意：确保应用 NetworkPolicy。 你可以在/cks/net/po.yaml 找到一个模板清单文件。
+
+**思路：**
+1. 查看pod的label
+2. 使用ingress，查看 ns **qa** 的label
+3. 最后apply 
+
+```yaml
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: pod-restriction
+  namespace: dev-team
+spec:
+  podSelector:
+    matchLabels:
+      name: products-service
+  policyTypes:
+    - Ingress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: qa
+    - from:
+        - podSelector:
+            matchLabels:
+              environment: testing
+          namespaceSelector: {}
+```
+
+```shell
+# apply 和验证
+k create -f netpol.yaml
+k describe networkpolicy pod-restriction -n dev-team
+```
+
+## 13. Trivy 扫描镜像安全漏洞
+**Task** 
+使用 Trivy 开源容器扫描器检测 namespace **kamino** 中 Pod 使用的具有严重漏洞的镜像。 
+
+查找具有 High 或者 Critical 严重性漏洞的镜像，并删除使用这些镜像的 Pod。
+
+注意：Trivy仅安装在cluster的master节点上，在工作节点上不可使用。
+必须切换到cluster的master节点才能使用Trivy.
+
+
+```
+trivy image --help
+
+trivy image --severity HIGH,CRITICAL  image:tag
+
+k get pods --namespace kamino --output=custom-columns="Name:.metadata.name,Img:.spec.containers[*].image"
+k delete pod -n kamino xxx
+```
+
+## 14. AppArmor
+Context                
+AppArmor 已在 cluster 的工作节点上被启用，一个 AppArmor 配置文件已存在，但尚未被实施。
+
+Task                 
+在 cluster 的工作节点上，实施位于 **/etc/apparmor.d/nginx_apparmor** 的现有 AppArmor 配置文件。
+编辑位于 **/home/candidate/KSSK00401/nginx-deploy.yaml** 的现有清单文件以应用 AppArmor 配置文件。最后，应用清单文件并创建其中指定的Pod。
+
+
+
+## 15. 
 

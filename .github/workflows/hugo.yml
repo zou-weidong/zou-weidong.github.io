@@ -59,7 +59,10 @@ jobs:
           hugo \
             --gc \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"          
+            --baseURL "${{ steps.pages.outputs.base_url }}/"
+      - name: Add google
+        run: |
+          echo  "google-site-verification: google04e419b399f2e46d.html" > ./public/google04e419b399f2e46d.html         
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
