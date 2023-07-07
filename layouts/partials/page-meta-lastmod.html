@@ -1,0 +1,29 @@
+<script src="https://giscus.app/client.js"
+        data-repo="zou-weidong/zou-weidong.github.io"
+        data-repo-id="R_kgDOJajL1g"
+        data-category="General"
+        data-category-id="DIC_kwDOJajL1s4CXups"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="top"
+        data-theme="light"
+        data-lang="en"
+        data-loading="lazy"
+        crossorigin="anonymous"
+        async>
+</script>
+
+<!-- zh-CN -->
+
+{{ if and (.GitInfo) (.Site.Params.github_repo) -}}
+<div class="text-muted mt-5 pt-3 border-top">
+  {{ T "post_last_mod" }} {{ .Lastmod.Format .Site.Params.time_format_default -}}
+  {{ with .GitInfo }}: {{/* Trim WS */ -}}
+    <a href="{{ $.Site.Params.github_repo }}/commit/{{ .Hash }}">
+      {{- .Subject }} ({{ .AbbreviatedHash }}) {{- /* Trim WS */ -}}
+    </a>
+  {{- end }}
+</div>
+{{ end -}}
