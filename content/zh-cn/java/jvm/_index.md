@@ -1,7 +1,7 @@
 ---
 title: "虚拟机"
 linkTitle: "虚拟机"
-weight: 3
+weight: 10
 description: >
   JVM 虚拟机
 ---

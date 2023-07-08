@@ -184,7 +184,7 @@ filter 表中新增容器的目标地址，目标端口是映射端口的 TCP �
 nat 表 上提供了 Docker 容器端口转发的能力，将访问本地地址端口流量的目标地址换成容器的 ip:port 地址。
 
 ## containerd 与 iptables
-k8s1.24不支持 dockershim，要将容器的运行时切换到 contained，在 contained 中是无法尽心端口映射的。
+k8s1.24不支持 dockershim，要将容器的运行时切换到 contained，在 contained 中是无法进行端口映射的。
 自带的 ctr 命令不支持端口映射，那么想用的时候，怎么做呢？
 
 一种是自己管理 iptables 规则，比较繁琐。
