@@ -1,6 +1,6 @@
 ---
 title: "minio"
-linkTitle: "miio"
+linkTitle: "minio"
 weight: 226
 description: >
     企业级开源的对象存储。
