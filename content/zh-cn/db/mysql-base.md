@@ -1,6 +1,6 @@
 ---
-title: "基础知识"
-linkTitle: "基础知识"
+title: "Mysql基础知识"
+linkTitle: "Mysql基础知识"
 weight: 1
 description: >
   mysql 基础知识

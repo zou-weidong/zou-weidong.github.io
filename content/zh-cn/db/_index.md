@@ -1,6 +1,6 @@
 ---
-title: "Mysql"
-linkTitle: "Mysql"
+title: "DB"
+linkTitle: "db"
 menu:
   main:
     weight: 7
@@ -9,7 +9,5 @@ cascade:
 ---
 
 {{% pageinfo %}}
-Mysql
+DB 相关知识
 {{% /pageinfo %}}
-
-**mysql**
