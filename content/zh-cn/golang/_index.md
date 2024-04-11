@@ -10,11 +10,10 @@ cascade:
 ---
 
 {{% pageinfo %}}
-This is a placeholder page that shows you how to use this template site.
+没有项目做，语法很快就会忘记，这里把常用的语法记下来
 {{% /pageinfo %}}
 
 
-This section is where the user documentation for your project lives - all the information your users need to understand and successfully use your project. 
 
 
 
