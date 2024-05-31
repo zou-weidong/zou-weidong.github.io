@@ -4,7 +4,7 @@ title: "Redis"
 linkTitle: "Redis"
 menu:
   main:
-    weight: 8
+    weight: 10
 cascade:
   type: docs
 ---

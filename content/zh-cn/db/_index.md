@@ -3,7 +3,7 @@ title: "DB"
 linkTitle: "db"
 menu:
   main:
-    weight: 7
+    weight: 20
 cascade:
   type: docs
 ---
