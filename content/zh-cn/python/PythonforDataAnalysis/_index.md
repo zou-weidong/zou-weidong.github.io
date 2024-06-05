@@ -3,7 +3,8 @@ title: "《Python for Data Analysis》第 3 版"
 linkTitle: "《Python for Data Analysis》第 3 版"
 weight: 2
 description: >
-  看完语法之后，直接看用Python进行数据分析，这里进行简单整理
+  看完语法之后，直接看用Python进行数据分析，这里进行简单整理。
+  官方在线书籍：[地址](https://wesmckinney.com/book/)
 ---
 
 {{% pageinfo %}}
@@ -496,3 +497,4 @@ HDFStore 类常用方法：
 - keys()：返回 DataFrame 的键列表
 
 
+### 
