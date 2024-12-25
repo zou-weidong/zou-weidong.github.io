@@ -2,11 +2,8 @@
 ---
 title: "Kubernetes"
 linkTitle: "Kubernetes"
-menu:
-  main:
-    weight: 1
-cascade:
-  type: docs
+weight: 2
+
 ---
 
 {{% pageinfo %}}

@@ -1,19 +1,14 @@
 
 ---
-title: "Java"
-linkTitle: "Java"
+title: "Technology"
+linkTitle: "Technology"
 menu:
   main:
-    weight: 5
+    weight: 1
 cascade:
   type: docs
 ---
 
 {{% pageinfo %}}
-Java
+技术文章
 {{% /pageinfo %}}
-
-
-
-
-

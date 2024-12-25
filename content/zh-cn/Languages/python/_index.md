@@ -2,11 +2,7 @@
 ---
 title: "Python"
 linkTitle: "Python"
-menu:
-  main:
-    weight: 7
-cascade:
-  type: docs
+weight: 3
 ---
 
 {{% pageinfo %}}

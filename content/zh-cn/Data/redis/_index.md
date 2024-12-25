@@ -2,11 +2,7 @@
 ---
 title: "Redis"
 linkTitle: "Redis"
-menu:
-  main:
-    weight: 10
-cascade:
-  type: docs
+weight: 2
 ---
 
 {{% pageinfo %}}

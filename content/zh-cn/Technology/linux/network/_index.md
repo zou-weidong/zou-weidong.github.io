@@ -2,11 +2,9 @@
 ---
 title: "Network"
 linkTitle: "Network"
-menu:
-  main:
-    weight: 3
-cascade:
-  type: docs
+
+weight: 3
+description: >
 ---
 
 {{% pageinfo %}}

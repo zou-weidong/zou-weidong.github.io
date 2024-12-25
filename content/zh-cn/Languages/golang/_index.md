@@ -2,11 +2,8 @@
 ---
 title: "Golang"
 linkTitle: "Golang"
-menu:
-  main:
-    weight: 6
-cascade:
-  type: docs
+weight: 1
+
 ---
 
 {{% pageinfo %}}

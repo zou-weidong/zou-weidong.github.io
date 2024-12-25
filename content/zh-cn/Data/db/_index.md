@@ -1,11 +1,7 @@
 ---
 title: "DB"
 linkTitle: "db"
-menu:
-  main:
-    weight: 20
-cascade:
-  type: docs
+weight: 1
 ---
 
 {{% pageinfo %}}

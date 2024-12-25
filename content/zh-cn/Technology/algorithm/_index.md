@@ -2,11 +2,9 @@
 ---
 title: "Algorithm"
 linkTitle: "Algorithm"
-menu:
-  main:
-    weight: 4
-cascade:
-  type: docs
+weight: 1
+description: >
+  算法
 ---
 
 {{% pageinfo %}}

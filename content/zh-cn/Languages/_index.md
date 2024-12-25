@@ -1,7 +1,7 @@
 
 ---
-title: "Linux"
-linkTitle: "Linux"
+title: "Languages"
+linkTitle: "Languages"
 menu:
   main:
     weight: 2
@@ -10,10 +10,5 @@ cascade:
 ---
 
 {{% pageinfo %}}
-Linux
+语言的语法，技术细节
 {{% /pageinfo %}}
-
-
-
-
-
