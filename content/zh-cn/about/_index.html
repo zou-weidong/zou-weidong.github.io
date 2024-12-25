@@ -6,11 +6,101 @@ menu:
     weight: 100
 ---
 
-
-{{< blocks/cover title="About Me" image_anchor="center" height="full" color="white" >}}
-<div class="mx-auto">
-	<p class="lead mt-5">
-    August Zou - 西安邮电大学
+{{< blocks/cover  image_anchor="center" height="full" >}}
+<div class="mx-auto text-center">
+  <h1 class="display-4 mt-5">August Zou - 西安邮电大学</h1>
+  <hr class="my-4" />
+  <p>
+    欢迎来到我的个人页面！我对技术、编程和持续学习充满热情。
   </p>
+  <div class="mt-4">
+    <a
+      href="https://github.com/zou-weidong"
+      target="_blank"
+      class="btn btn-primary btn-lg"
+      role="button"
+      >访问我的 GitHub</a
+    >
+    <a
+      href="mailto:549392485@qq.com"
+      class="btn btn-secondary btn-lg"
+      role="button"
+      >给我发邮件</a
+    >
+  </div>
 </div>
 {{< /blocks/cover >}}
+
+<div class="container mt-5">
+  <h2 class="text-center">My Journey</h2>
+  <ul class="timeline">
+    <li>
+      <div class="timeline-badge">
+        <i class="glyphicon glyphicon-education"></i>
+      </div>
+      <div class="timeline-panel">
+        <div class="timeline-heading">
+          <h4 class="timeline-title">2014.09 - 2018.06</h4>
+          <p>
+            <small class="text-muted"
+              >西安邮电大学 - 光电信息科学与工程专业</small
+            >
+          </p>
+        </div>
+        <div class="timeline-body">
+          <p>
+            主修电子类，计算机类和通信类课程。本科毕业，获得学士学位。
+          </p>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="timeline-badge">
+        <i class="glyphicon glyphicon-briefcase"></i>
+      </div>
+      <div class="timeline-panel">
+        <div class="timeline-heading">
+          <h4 class="timeline-title">2018.07 - 2019.06</h4>
+          <p><small class="text-muted">Kingdee 金蝶天燕中间件</small></p>
+        </div>
+        <div class="timeline-body">
+          <p>
+            担任开发工程师，专注于政府财务软件的凭证模块和资产模块开发。
+          </p>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="timeline-badge">
+        <i class="glyphicon glyphicon-briefcase"></i>
+      </div>
+      <div class="timeline-panel">
+        <div class="timeline-heading">
+          <h4 class="timeline-title">2019.07 - 2023.11</h4>
+          <p><small class="text-muted">Newegg</small></p>
+        </div>
+        <div class="timeline-body">
+          <p>
+            担任开发工程师，主要负责商品后台系统的开发。后内部转岗在 Devops 团队，负责CI/CD，k8s集群的管理，工具链的集成，Prometheus监控等工作。
+          </p>
+        </div>
+      </div>
+    </li>
+    <li>
+      <div class="timeline-badge">
+        <i class="glyphicon glyphicon-briefcase"></i>
+      </div>
+      <div class="timeline-panel">
+        <div class="timeline-heading">
+          <h4 class="timeline-title">2023.12 - 至今</h4>
+          <p><small class="text-muted">Weee</small></p>
+        </div>
+        <div class="timeline-body">
+          <p>
+            担任运维工程师，主要负责EKS管理和监控告警模块的管理。
+          </p>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
